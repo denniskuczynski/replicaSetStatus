@@ -6,5 +6,5 @@ This repository contains a demo of sharing Go code with Javascript using [Gopher
 
 To build: `./bin/gopherjs -v build src/export.go`
 
-To see the demo in action:
+To see the demo for visualizing replica set sync chaining visit:
 * https://rawgit.com/denniskuczynski/replicaSetStatus/master/index.html
