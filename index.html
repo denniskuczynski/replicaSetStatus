@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Replica Set Status</title>
+<script type="text/javascript" src="./export.js"></script>
+<script type="text/javascript">
+	var rs = window.rs;
+
+    function processRsStatus() {
+    	var rsStatusJSON = document.getElementById('rsStatus').value;
+    	rsStatusJSON = stripExtendedJSON(rsStatusJSON);
+
+    	var rsStatus = rs.FromJSON(rsStatusJSON);
+    	rsStatus.PopulateSyncingFrom();
+		var primary = rsStatus.GetPrimary();
+
+		var outputJSON = JSON.stringify(primary, undefined, 4);
+		document.getElementById('rsOutput').innerHTML = outputJSON;
+    }
+
+    function stripExtendedJSON(jsonText) {
+    	jsonText = jsonText.replace(/NumberLong\((.+)\)/g, '$1');
+    	jsonText = jsonText.replace(/ISODate\((.+)\)/g, '$1');
+    	jsonText = jsonText.replace(/Timestamp\((.+)\)/g, 'null');
+    	return jsonText;
+    }
+</script>
+</head>
+
+<body>
+	<h1>Input rs.status() JSON</h1>
+    <textarea id="rsStatus" rows="10" cols="200">
+    	{
+			"set" : "backup_test",
+			"date" : ISODate("2016-04-25T15:34:35.168Z"),
+			"myState" : 1,
+			"term" : NumberLong(6),
+			"heartbeatIntervalMillis" : NumberLong(2000),
+			"members" : [
+				{
+					"_id" : 0,
+					"name" : "dennismac:3000",
+					"health" : 1,
+					"state" : 1,
+					"stateStr" : "PRIMARY",
+					"uptime" : 164315,
+					"optime" : {
+						"ts" : Timestamp(1461591059, 2),
+						"t" : NumberLong(6)
+					},
+					"optimeDate" : ISODate("2016-04-25T13:30:59Z"),
+					"electionTime" : Timestamp(1461591059, 1),
+					"electionDate" : ISODate("2016-04-25T13:30:59Z"),
+					"configVersion" : 1,
+					"self" : true
+				},
+				{
+					"_id" : 1,
+					"name" : "dennismac:3010",
+					"health" : 1,
+					"state" : 2,
+					"stateStr" : "SECONDARY",
+					"uptime" : 50969,
+					"optime" : {
+						"ts" : Timestamp(1461591059, 2),
+						"t" : NumberLong(6)
+					},
+					"optimeDate" : ISODate("2016-04-25T13:30:59Z"),
+					"lastHeartbeat" : ISODate("2016-04-25T15:34:33.363Z"),
+					"lastHeartbeatRecv" : ISODate("2016-04-25T15:34:34.435Z"),
+					"pingMs" : NumberLong(0),
+					"syncingTo" : "dennismac:3000",
+					"configVersion" : 1
+				},
+				{
+					"_id" : 1,
+					"name" : "dennismac:3020",
+					"health" : 1,
+					"state" : 2,
+					"stateStr" : "SECONDARY",
+					"uptime" : 50969,
+					"optime" : {
+						"ts" : Timestamp(1461591059, 2),
+						"t" : NumberLong(6)
+					},
+					"optimeDate" : ISODate("2016-04-25T13:30:59Z"),
+					"lastHeartbeat" : ISODate("2016-04-25T15:34:33.363Z"),
+					"lastHeartbeatRecv" : ISODate("2016-04-25T15:34:34.435Z"),
+					"pingMs" : NumberLong(0),
+					"syncingTo" : "dennismac:3010",
+					"configVersion" : 1
+				}
+			],
+			"ok" : 1
+		}
+    </textarea>
+    <br/>
+    <button onclick="processRsStatus();">Process</button>
+    <br/>
+    <h1>Output</h1>
+    <pre id="rsOutput"></pre>
+</body>
+
+</html>
