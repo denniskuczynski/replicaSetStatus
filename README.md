@@ -2,7 +2,7 @@
 
 This repository contains a demo of sharing Go code with Javascript using [GopherJS](https://github.com/gopherjs/gopherjs)
 
-[export.go](https://rawgit.com/denniskuczynski/replicaSetStatus/master/src/export.go) exposes an interface to some utility functions in the [replicaSetStatus](https://rawgit.com/denniskuczynski/replicaSetStatus/master/src/replicaSetStatus) module.
+[export.go](./src/export.go) exposes an interface to some utility functions in the [replicaSetStatus](./src/replicaSetStatus) module.
 
 To build: `./bin/gopherjs -v build src/export.go`
 
